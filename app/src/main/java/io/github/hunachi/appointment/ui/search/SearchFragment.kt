@@ -51,29 +51,24 @@ class SearchFragment : Fragment() {
         viewModel.keys.nonNullObserver(this) {
             searchKeysAdapter.submitList(it)
         }
-
         val list = listOf(
             SearchKey("name", false),
             SearchKey("lecture", false),
             SearchKey("nickname", false)
         )
-
-        viewModel.setUpKeys(list)
-
-        viewModel.refreshProfessors()
-
         professorAdapter.clickedItem.nonNullObserver(this) {
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(
-                    R.id.fragment,
-                    CreateApoFragment.newInstance(it)
-                )
-                ?.commit()
+            val currentActivity = activity ?: return@nonNullObserver
+            currentActivity.supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment, CreateApoFragment.newInstance(it))
+                .commit()
         }
-
         searchKeysAdapter.clickedItem.nonNullObserver(this) {
             viewModel.refreshKeys(it)
         }
+        viewModel.setUpKeys(list)
+        viewModel.refreshProfessors()
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -84,10 +79,11 @@ class SearchFragment : Fragment() {
             itemAnimator = SlideInLeftAnimator1()
         }
 
-        val view = activity?.currentFocus
-        if (view != null) {
-            val manager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            manager.hideSoftInputFromWindow(view.windowToken, 0)
+        val currentFocusView = activity?.currentFocus
+        if (currentFocusView != null) {
+            val manager =
+                activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            manager.hideSoftInputFromWindow(currentFocusView.windowToken, 0)
         }
 
         search_list.apply {
@@ -102,7 +98,6 @@ class SearchFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.search, menu)
-        //val item = menu.findItem(io.github.hunachi.appointment.R.id.search_menu_search_view)
         (menu.findItem(R.id.search_menu_search_view).actionView as SearchView).apply {
             setIconifiedByDefault(true)
             isSubmitButtonEnabled = true
@@ -115,7 +110,8 @@ class SearchFragment : Fragment() {
             viewModel.refreshProfessors(searchWord)
             val view = activity?.currentFocus
             if (view != null) {
-                val manager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val manager =
+                    activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 manager.hideSoftInputFromWindow(view.windowToken, 0)
             }
             return true
