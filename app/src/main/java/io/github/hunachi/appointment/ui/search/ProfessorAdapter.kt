@@ -16,6 +16,10 @@ import kotlinx.android.synthetic.main.item_professor_image.view.*
 class ProfessorAdapter : ListAdapter<Professor, ProfessorAdapter.ViewHolder>(DIFFUtil) {
 
     // 選ばれているItemを通知するため。
+    //
+    // 追記：`特定のタイプのデータを保持する LiveData のインスタンスを作成します。これは通常、
+    // ViewModel クラス内で行います。`from 公式 やで..
+    // ある意味，AdapterはFragmentのViewが死んだら再生成されるから無駄な通知がされずうまく行くんだろうけど．
     private val modifiableClicked: MutableLiveData<Professor> = MutableLiveData()
     val clickedItem: LiveData<Professor> = modifiableClicked
 

@@ -37,11 +37,7 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(
-            io.github.hunachi.appointment.R.layout.search_fragment,
-            container,
-            false
-        )
+        return inflater.inflate(R.layout.search_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
