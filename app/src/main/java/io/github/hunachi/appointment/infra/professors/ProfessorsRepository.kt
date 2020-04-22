@@ -17,7 +17,7 @@ class ProfessorsRepository {
     private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
     suspend fun professors() = suspendCoroutine<List<Body>> { co ->
-        "https://qeq5hg9dh4.execute-api.us-east-1.amazonaws.com/v1/professors".httpGet()
+        "https://~~.amazonaws.com/v1/professors".httpGet()
             .responseObject<ProfessorsResult> { req, res, result ->
                 val (professorResult, err) = result
                 err?.let { it1 ->
@@ -30,7 +30,7 @@ class ProfessorsRepository {
     }
 
     suspend fun professorByName(word: String) = suspendCoroutine<List<Body>> { co ->
-        "https://qeq5hg9dh4.execute-api.us-east-1.amazonaws.com/v1/professors".httpGet(
+        "https://~~.amazonaws.com/v1/professors".httpGet(
             listOf("key" to "name", "name" to word)
         ).responseObject<ProfessorsResult> { req, res, result ->
             val (professorResult, err) = result
@@ -41,7 +41,7 @@ class ProfessorsRepository {
     }
 
     suspend fun professorByLecture(word: String) = suspendCoroutine<List<Body>> { co ->
-        "https://qeq5hg9dh4.execute-api.us-east-1.amazonaws.com/v1/professors".httpGet(
+        "https://~~.amazonaws.com/v1/professors".httpGet(
             listOf("key" to "lecture", "lecture" to word)
         ).responseObject<ProfessorsResult> { req, res, result ->
             val (professorResult, err) = result
@@ -52,7 +52,7 @@ class ProfessorsRepository {
     }
 
     suspend fun professorByNickname(word: String) = suspendCoroutine<List<Body>> { co ->
-        "https://qeq5hg9dh4.execute-api.us-east-1.amazonaws.com/v1/professors".httpGet(
+        "https://~~.amazonaws.com/v1/professors".httpGet(
             listOf("key" to "nickname", "nickname" to word)
         ).responseObject<ProfessorsResult> { req, res, result ->
             val (professorResult, err) = result
